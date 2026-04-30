@@ -11,11 +11,10 @@ authors = [
     {name = "Joon Rho"},
 ]
 readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
 keywords = ["blackjack", "pygame", "card-game", "education", "basic-strategy"]
 classifiers = [
     "Programming Language :: Python :: 3.11",
-    "License :: OSI Approved :: MIT License",
     "Topic :: Games/Entertainment",
 ]
 requires-python = ">=3.11"
@@ -33,6 +32,9 @@ addopts = "--cov=analytics --cov=coach --cov=core --cov=persistence --cov=strate
 
 [tool.coverage.run]
 source = ["analytics", "coach", "core", "persistence", "strategy", "util"]
+
+[tool.setuptools.packages.find]
+include = ["analytics*", "coach*", "core*", "persistence*", "strategy*", "ui*", "util*"]
 
 [tool.ruff]
 line-length = 100
