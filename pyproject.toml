@@ -42,3 +42,7 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["analytics", "coach", "core", "persistence", "strategy", "ui", "util"]
+src = ["."]

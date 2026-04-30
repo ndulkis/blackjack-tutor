@@ -14,7 +14,8 @@ class Hand:
     is_split_from: ID of the parent hand if this hand was created by splitting, else None.
     has_doubled: True after a double-down action.
     is_surrendered: True after a late surrender.
-    is_split_ace: True if this hand was created by splitting aces (one card only, no further actions).
+    is_split_ace: True if this hand was created by splitting aces (one card only, no further
+        actions).
     """
 
     cards: list[Card] = field(default_factory=list)
