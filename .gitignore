@@ -201,6 +201,7 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 .claude
+make-a-plan-about-humble-valiant.md
 
 # Marimo
 marimo/_static/

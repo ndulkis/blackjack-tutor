@@ -246,7 +246,6 @@ class TestLatesurrender:
 
     def test_surrender_illegal_on_split_hand(self):
         # Split 8s, then check surrender not available on split hand
-        rules = RuleSet(late_surrender=True)
         r = make_round("8H", "KS", "8D", "7C", "5H", "6C", "KH")
         play_to_deal(r, bet=10)
         r.apply(Action.SPLIT)
@@ -301,7 +300,7 @@ class TestSplit:
         # 8s again: build 4 hands
         r = make_round(
             "8H", "KS", "8D", "7C",  # initial deal
-            "8C", "8S",               # first split: hand_a gets 8C, then split again → hand_a1 gets 8S
+            "8C", "8S",               # first split: 8C→hand_a; re-split gives 8S to hand_a1
             "2H",                      # hand_a1 second card
             "3D",                      # hand_a2 (was 8C hand)
             "4C",                      # hand_b (8D hand)
@@ -318,11 +317,6 @@ class TestSplit:
         assert len(r.player_hands) == 4
 
     def test_fifth_split_rejected(self):
-        r = make_round(
-            "8H", "KS", "8D", "7C",
-            "8C", "8S", "2H", "8X" if False else "3D",
-            "4C", "5D", "KH",
-        )
         # Build 4 hands first then verify split is not offered
         # Use a simpler approach: just verify legal_actions blocks at 4
         rules = RuleSet()

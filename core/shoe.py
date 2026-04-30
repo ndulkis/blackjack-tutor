@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import random
 
-from core.card import Card, RANKS, SUITS
+from core.card import RANKS, SUITS, Card
 
 
 class Shoe:

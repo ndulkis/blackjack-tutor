@@ -6,7 +6,6 @@ import pytest
 from analytics.session import (
     CategoryStats,
     Decision,
-    InsuranceStats,
     SessionTracker,
     _zone,
 )
@@ -14,7 +13,6 @@ from analytics.streaks import StreakTracker
 from core.card import Card
 from core.game import Action
 from core.hand import Hand
-
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -133,7 +131,9 @@ class TestSessionTrackerAccuracy:
         tracker.record(_decision(_hand("5", "6"), "7", Action.HIT, Action.HIT))
         # Add a wrong insurance decision (secondary)
         tracker.record(
-            _decision(_hand("5", "6"), "A", Action.INSURE, Action.DECLINE_INSURANCE, is_primary=False)
+            _decision(
+                _hand("5", "6"), "A", Action.INSURE, Action.DECLINE_INSURANCE, is_primary=False
+            )
         )
         assert tracker.accuracy() == pytest.approx(1.0)
 
@@ -162,7 +162,6 @@ class TestSessionTrackerCategories:
 
     def test_hard_17_plus_bucket(self) -> None:
         tracker = SessionTracker()
-        hand = _hand("9", "9")  # hard 18 (pair too, but is_pair checked first by _zone — wait, _zone checks pair first)
         # Use non-pair hard 17+
         hand2 = Hand(cards=[_card("9", "H"), _card("8", "D")])  # hard 17
         tracker.record(_decision(hand2, "6", Action.STAND, Action.STAND))
@@ -185,7 +184,6 @@ class TestSessionTrackerCategories:
 
     def test_surrender_bucket(self) -> None:
         tracker = SessionTracker()
-        hand = _hand("8", "8")  # hard 16 — would be a pair but let's use 8+8 directly
         # Make it look like a non-pair hard 16
         hand2 = Hand(cards=[_card("9", "H"), _card("7", "D")])  # hard 16
         tracker.record(_decision(hand2, "10", Action.SURRENDER, Action.SURRENDER))

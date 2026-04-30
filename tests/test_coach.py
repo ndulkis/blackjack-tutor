@@ -1,8 +1,6 @@
 """Tests for coach/base.py and coach/rule_coach.py."""
 from __future__ import annotations
 
-import pytest
-
 from analytics.session import Decision
 from coach.base import Coach, CoachResult
 from coach.rule_coach import RuleCoach
@@ -10,7 +8,6 @@ from core.card import Card
 from core.game import Action
 from core.hand import Hand
 from core.rules import RuleSet
-
 
 # ---------------------------------------------------------------------------
 # Helpers
