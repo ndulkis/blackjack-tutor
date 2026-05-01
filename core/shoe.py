@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import random
 
-from core.card import Card, RANKS, SUITS
+from core.card import RANKS, SUITS, Card
 
 
 class Shoe:
@@ -12,15 +12,26 @@ class Shoe:
     that a reshuffle is needed before the next round (never mid-round).
     """
 
-    def __init__(self, num_decks: int = 6, penetration: float = 0.75) -> None:
+    def __init__(
+        self,
+        num_decks: int = 6,
+        penetration: float = 0.75,
+        _fixed_cards: list[Card] | None = None,
+    ) -> None:
         self.num_decks = num_decks
         self.penetration = penetration
+        self._fixed_cards_override = _fixed_cards
         self._cards: list[Card] = []
         self._index: int = 0
         self._cut_card: int = 0
         self._build()
 
     def _build(self) -> None:
+        if self._fixed_cards_override is not None:
+            self._cards = list(self._fixed_cards_override)
+            self._index = 0
+            self._cut_card = len(self._cards)
+            return
         self._cards = [
             Card(rank, suit)
             for _ in range(self.num_decks)

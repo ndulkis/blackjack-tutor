@@ -1,4 +1,4 @@
-from core.card import Card, RANKS, SUITS
+from core.card import RANKS, SUITS, Card
 from core.hand import Hand
 from core.shoe import Shoe
 

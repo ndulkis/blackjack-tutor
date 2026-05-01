@@ -1,22 +1,40 @@
 [build-system]
 requires = ["setuptools>=68"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "blackjack-tutor"
 version = "0.1.0"
-requires-python = ">=3.11"
+description = "A PyGame blackjack trainer that evaluates decisions against basic strategy in real time"
+authors = [
+    {name = "Nathan Dulkis", email = "ndulkis@gmail.com"},
+    {name = "Joon Rho"},
+]
+readme = "README.md"
+license = "MIT"
+keywords = ["blackjack", "pygame", "card-game", "education", "basic-strategy"]
+classifiers = [
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Games/Entertainment",
+]
+requires-python = ">=3.11,<3.14"
 dependencies = ["pygame>=2.6"]
+
+[project.urls]
+Repository = "https://github.com/ndulkis/blackjack-tutor"
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "pytest-cov>=5", "pre-commit>=3", "ruff>=0.4"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "--cov=core --cov=util --cov-report=term-missing"
+addopts = "--cov=analytics --cov=coach --cov=core --cov=persistence --cov=strategy --cov=util --cov-report=term-missing"
 
 [tool.coverage.run]
-source = ["core", "util"]
+source = ["analytics", "coach", "core", "persistence", "strategy", "util"]
+
+[tool.setuptools.packages.find]
+include = ["analytics*", "coach*", "core*", "persistence*", "strategy*", "ui*", "util*"]
 
 [tool.ruff]
 line-length = 100
@@ -24,3 +42,6 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["analytics", "coach", "core", "persistence", "strategy", "ui", "util"]
