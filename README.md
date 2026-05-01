@@ -1,6 +1,6 @@
 # Blackjack Tutor
 
-![Python](https://img.shields.io/badge/python-3.11%2B-blue)
+![Python](https://img.shields.io/badge/python-3.11--3.13-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![CI](https://github.com/ndulkis/blackjack-tutor/actions/workflows/ci.yml/badge.svg)
 ![Coverage](https://img.shields.io/badge/coverage-96%25-brightgreen)
@@ -9,55 +9,60 @@ A PyGame-based blackjack trainer that evaluates every player decision against
 the mathematically correct basic strategy in real time, tracks accuracy across
 sessions, and explains mistakes with actionable coaching feedback.
 
-> **Status:** Phase 1 complete (rule-based engine + analytics + coaching).
-> Phase 2 (Gemini LLM coach) in progress.
+> **Status:** Complete and fully playable — engine, analytics, coaching, and PyGame UI all shipped.
 
 ---
 
 ## Features
 
 ### Phase 1 — Complete
-- Full 6-deck blackjack engine: splits, doubles, late surrender, insurance
+- Full 6-deck blackjack engine: splits, re-splits (up to 4 hands), doubles, late surrender, insurance
 - Basic strategy chart (S17 / DAS / LS, Wizard of Odds source)
 - Real-time decision evaluation with instant rule-based coaching
 - Six-category accuracy tracking: Hard 5–11, Hard 12–16, Hard 17+, Soft totals, Pairs, Surrender
-- Streak counter (primary decisions only)
-- Session history and crash-recovery persistence (JSON)
+- Streak counter and session accuracy in the HUD
+- Session history and crash-recovery persistence (JSON, atomic writes)
+- PyGame table scene: bet adjustment, all player actions, colour-coded coach feedback, split-hand highlighting
 - 682 tests, 96% coverage
 
-### Phase 2 — In Progress
-- Gemini 2.5 Flash LLM coach with threaded responses and rule-based fallback
-- LRU response cache
-
 ---
+
+## Requirements
+
+- **Python 3.11–3.13** — Python 3.14+ is not supported because pygame 2.6 does not yet have a pre-built wheel for it and its build system is incompatible. Python 3.12 is recommended.
+- **pygame 2.6** — installed automatically via `pip install -e ".[dev]"`
 
 ## Quick Start
 
 ```bash
 git clone https://github.com/ndulkis/blackjack-tutor.git
 cd blackjack-tutor
-python -m venv .venv
-# Windows
+
+# Windows — explicitly use Python 3.12 to avoid build issues with 3.14+
+py -3.12 -m venv .venv
 .venv\Scripts\activate
+
 # macOS / Linux
+python3.12 -m venv .venv
 source .venv/bin/activate
 
 pip install -e ".[dev]"
 python -m ui.pygame_app
 ```
 
-**Keyboard shortcuts (at the table):**
+**Keyboard shortcuts:**
 
 | Key | Action |
 |-----|--------|
+| ↑ / ↓ | Increase / decrease bet |
+| Space / Enter | Deal / next hand |
 | H | Hit |
 | S | Stand |
 | D | Double |
 | P | Split |
 | R | Surrender |
 | Y / N | Insurance yes / no |
-| Space | Deal / next hand |
-| Esc | Back to menu |
+| Esc | Quit |
 
 ---
 
@@ -85,7 +90,7 @@ blackjack-tutor/
 ├── core/           # Card, Hand, Shoe, RuleSet, Round state machine
 ├── strategy/       # Basic strategy charts, engine, rationale tags
 ├── analytics/      # SessionTracker, StreakTracker, Decision dataclass
-├── coach/          # Coach protocol, RuleCoach, (LlmCoach — Phase 2)
+├── coach/          # Coach protocol, RuleCoach
 ├── persistence/    # JSON schemas, atomic write, migrations stub
 ├── ui/             # PyGame app, scenes, widgets
 │   ├── scenes/     # table, menu, summary, beginner tutorial, crash modal
@@ -105,8 +110,7 @@ blackjack-tutor/
 
 ## Known Limitations
 
-- UI not yet playable (Phase 1 delivered the engine and data layers; Phase 2 completes the UI)
-- LLM coach requires a `GEMINI_API_KEY` in `.env` (see `.env.example`)
+- Coaching is rule-based only — no LLM integration
 - No card-counting mode — trainer teaches basic strategy only
 
 ---
@@ -116,8 +120,6 @@ blackjack-tutor/
 **Authors:** Nathan Dulkis & Joon Rho — CPSC 481 course project
 
 **Basic strategy source:** Wizard of Odds, 6-deck S17/DAS/LS chart
-
-**Card assets:** [Kenney.nl](https://kenney.nl/assets/playing-cards-pack) (CC0)
 
 ---
 
