@@ -1,21 +1,16 @@
 # Blackjack Tutor
 
 ![Python](https://img.shields.io/badge/python-3.11--3.13-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
 ![CI](https://github.com/ndulkis/blackjack-tutor/actions/workflows/ci.yml/badge.svg)
-![Coverage](https://img.shields.io/badge/coverage-96%25-brightgreen)
 
 A PyGame-based blackjack trainer that evaluates every player decision against
 the mathematically correct basic strategy in real time, tracks accuracy across
 sessions, and explains mistakes with actionable coaching feedback.
 
-> **Status:** Complete and fully playable — engine, analytics, coaching, and PyGame UI all shipped.
-
 ---
 
 ## Features
 
-### Phase 1 — Complete
 - Full 6-deck blackjack engine: splits, re-splits (up to 4 hands), doubles, late surrender, insurance
 - Basic strategy chart (S17 / DAS / LS, Wizard of Odds source)
 - Real-time decision evaluation with instant rule-based coaching
